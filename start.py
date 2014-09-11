@@ -45,6 +45,7 @@ def complete_task(test):
         if '://' not in request['url']:
             request['url'] = domain + request['url']
 
+        print request
         r = requests.Session().request(request['method'], request['url'],
                                               request.get('params'), request.get('data'),
                                               request.get('headers'), request.get('cookies'),
@@ -54,17 +55,18 @@ def complete_task(test):
                                               request.get('stream'), request.get('verify'), request.get('cert'))
         response = test.TEST['response'][i]
         if 'hooks' in response:
-            return response['hooks'](r)
+            if not response['hooks'](r):
+                return False
         else:
-            if 'status_code' in response[i] and r.status_code != response[i]['status_code']:
+            if 'status_code' in response and r.status_code != response['status_code']:
                 return False
-            if 'body' in response[i] and r.content != response[i]['body']:
+            if 'body' in response and r.content != response['body']:
                 return False
-            if 'header' in response[i]:
-                for h in response[i]['headers']:
+            if 'header' in response:
+                for h in response['headers']:
                     if r.headers.get(h, None) == None:
                         return False
-                    elif r.headers[h] != response[i][h]:
+                    elif r.headers[h] != response[h]:
                         return False
     return True
 

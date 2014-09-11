@@ -1,5 +1,6 @@
 def handler(response):
     print 'handler'
+    TEST['request'][1]['url'] = '/xyz/fdsa'
     return True
 
 
@@ -22,20 +23,37 @@ def handler(response):
 
 TEST = {
         'name': 'Sample Test 1',
-        'request': [{
+        'request': [
+        {
                 'method': 'GET',
-                'url': '/sample/get',
+                'url': '/sample/get1',
                 #'params': {'key': 'value'},
                 #'data': {'key': 'value'},
                 'timeout': 60,
                # 'headers': {'key': 'value'}
-        }],
-        'response': [{
+        },
+        {
+                'method': 'GET',
+                'url': '/sample/get2',
+                #'params': {'key': 'value'},
+                #'data': {'key': 'value'},
+                'timeout': 60,
+               # 'headers': {'key': 'value'}
+        }
+        ],
+        'response': [
+        {
                 'http_status': 411,
                 #'body': 'result',
                 #'header': {'key': 'value'},
                 'hooks': handler
-        }]
+        },
+        {
+                'http_status': 411,
+                #'body': 'result',
+                #'header': {'key': 'value'}
+        }
+        ]
 }
 
 

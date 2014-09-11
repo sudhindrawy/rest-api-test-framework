@@ -14,6 +14,5 @@ TEST = {
     'protocol': 'http',
     'testcases': [
         'test1.py',
-        'test1.py'
     ]
 }
