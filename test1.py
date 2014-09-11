@@ -1,5 +1,6 @@
-def search_handler(http_status, body, header):
-    print 'search_handler'
+def handler(response):
+    print 'handler'
+    return True
 
 
 #<request>
@@ -21,20 +22,20 @@ def search_handler(http_status, body, header):
 
 TEST = {
         'name': 'Sample Test 1',
-        'request': {
+        'request': [{
                 'method': 'GET',
                 'url': '/sample/get',
                 #'params': {'key': 'value'},
                 #'data': {'key': 'value'},
                 'timeout': 60,
                # 'headers': {'key': 'value'}
-        },
-        'response': {
+        }],
+        'response': [{
                 'http_status': 411,
                 #'body': 'result',
                 #'header': {'key': 'value'},
-                #'hooks': 'search_handler'
-        }
+                'hooks': handler
+        }]
 }
 
 

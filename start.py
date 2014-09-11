@@ -38,34 +38,34 @@ def get_input():
 
 
 def complete_task(test):
-    request = test.TEST['request']
-    if 'hooks' in test.TEST:
-        test.TEST['request']['hooks'](request)
+    for i, request in enumerate(test.TEST['request']):
+        if 'hooks' in test.TEST:
+            test.TEST['request']['hooks'](request)
 
-    if '://' not in request['url']:
-        request['url'] = domain + request['url']
+        if '://' not in request['url']:
+            request['url'] = domain + request['url']
 
-    response = requests.Session().request(request['method'], request['url'],
-                                          request.get('params'), request.get('data'),
-                                          request.get('headers'), request.get('cookies'),
-                                          request.get('files'), request.get('auth'),
-                                          request.get('timeout'), request.get('allow_redirects', True),
-                                          request.get('proxies'), request.get('hooks'),
-                                          request.get('stream'), request.get('verify'), request.get('cert'))
-
-    if 'hook' in test.TEST['response']:
-        return test.TEST['response']['hooks'](response)
-    else:
-        if 'status_code' in test.TEST['response'] and response.status_code != test.TEST['response']['status_code']:
-            return False
-        if 'body' in test.TEST['response'] and response.content != test.TEST['response']['body']:
-            return False
-        if 'header' in test.TEST['response']:
-            for h in test.TEST['response']['headers']:
-                if response.headers.get(h, None) == None:
-                    return False
-                elif response.headers[h] != test.TEST['response'][h]:
-                    return False
+        r = requests.Session().request(request['method'], request['url'],
+                                              request.get('params'), request.get('data'),
+                                              request.get('headers'), request.get('cookies'),
+                                              request.get('files'), request.get('auth'),
+                                              request.get('timeout'), request.get('allow_redirects', True),
+                                              request.get('proxies'), request.get('hooks'),
+                                              request.get('stream'), request.get('verify'), request.get('cert'))
+        response = test.TEST['response'][i]
+        if 'hooks' in response:
+            return response['hooks'](r)
+        else:
+            if 'status_code' in response[i] and r.status_code != response[i]['status_code']:
+                return False
+            if 'body' in response[i] and r.content != response[i]['body']:
+                return False
+            if 'header' in response[i]:
+                for h in response[i]['headers']:
+                    if r.headers.get(h, None) == None:
+                        return False
+                    elif r.headers[h] != response[i][h]:
+                        return False
     return True
 
 
@@ -79,7 +79,7 @@ def worker():
             print test.TEST['name'], 'Test Failed'
             return
 
-        print test.TEST['name'], 'Test Sucess'
+        print test.TEST['name'], 'Test Success'
 
 
 if __name__ == '__main__':
