@@ -15,7 +15,15 @@ Sample testcases.json
 	"global_query_param": {},
 	"init_handler_callback": "init_handler",
 	"test_cases": [
-			{
+		"test1.json"
+		"test2.json"
+		  ]
+	}
+	
+Sample test1.json
+===============================================================================
+
+		{
 			"name": "Sample Test 1",
 			"timeout": 60,
 			"request" : {
@@ -31,8 +39,12 @@ Sample testcases.json
 					"header": {"key":"value"},
 					"handler_callback": "search_handler"
 				     }
-			},
-			{
+			}
+			
+Sample test2.json
+===============================================================================
+			
+		{
 			"name": "Sample Test 2",
 			"timeout": 60,
 			"request" : [
@@ -65,8 +77,7 @@ Sample testcases.json
 						"header": {"key":"value"},
 						"handler_callback": "post_handler"
 				     	}
-				     ]
+				 ]
 			}
-		      ]
-	}
+	
 ===============================================================================
