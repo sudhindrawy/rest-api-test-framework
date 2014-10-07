@@ -13,6 +13,6 @@ TEST = {
     'domain': 'www.example.com',
     'protocol': 'http',
     'testcases': [
-        'test1.py',
+        'test_ews_push.py',
     ]
 }
