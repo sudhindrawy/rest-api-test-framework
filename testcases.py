@@ -10,7 +10,7 @@ TEST = {
     'global_post_param': {},
     'global_query_param': {},
     'init_hooks': init_handler,
-    'domain': 'www.example.com',
+    'domain': '127.0.0.1',
     'protocol': 'http',
     'testcases': [
         'test_ews_push.py',
